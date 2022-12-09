@@ -66,3 +66,85 @@
 # print(f"{row1}\n{row2}\n{row3}")
 
 #Rock Paper Scissors Game
+import random
+
+rock = '''
+    _______
+---'   ____)
+      (_____)
+      (_____)
+      (____)
+---.__(___)
+'''
+
+paper = '''
+    _______
+---'   ____)____
+          ______)
+          _______)
+         _______)
+---.__________)
+'''
+
+scissors = '''
+    _______
+---'   ____)____
+          ______)
+       __________)
+      (____)
+---.__(___)
+'''
+#variables for game control
+game = True #turns to false when player quits to break loop
+wins = 0 #number of times player wins
+ties = 0 #number of times tied
+count = 0 #count of total turns
+
+#opening print statement with instructions
+print("Rock, Paper, Scissors!\nPlay by typing rock, paper, or scissors and pressing enter. Enter quit to end the game.")
+#while loop to continue playing
+while game == True:
+    player = input("What will you throw?\n").lower
+    if player == "quit" or player == "q":
+        game = False
+        break
+    elif player == "rock" or player == "paper" or player == "scissors":
+        computer = random.randint(1,3)
+        if player == "rock":
+            count += 1
+            print(f"You:\n{rock}\n")
+            if computer == 1:
+                print(f"Computer:\n{rock}\n\nIt\'s a tie!")
+                ties += 1
+            elif computer == 2:
+                print(f"Computer:\n{paper}\n\nYou lose!")
+            else:
+                print(f"Computer:\n{scissors}\n\nYou win!")
+                wins += 1
+        elif player == "paper":
+            count += 1
+            print(f"You:\n{paper}\n")
+            if computer == 1:
+                print(f"Computer:\n{rock}\n\nYou win!")
+                wins += 1
+            elif computer == 2:
+                print(f"Computer:\n{paper}\n\nIt\'s a tie!")
+                ties += 1
+            else:
+                print(f"Computer:\n{scissors}\n\nYou lose!")
+        else:
+            count += 1
+            print(f"You:\n{scissors}\n")
+            if computer == 1:
+                print(f"Computer:\n{rock}\n\nYou lose!")
+            elif computer == 2:
+                print(f"Computer:\n{paper}\n\nYou win!")
+                wins += 1
+            else:
+                print(f"Computer:\n{scissors}\n\nIt\'s a tie!")
+                ties += 1
+            
+    else:
+        print("Please enter rock, paper, or scissors.\n")
+    print(f"Wins: {wins}\nTies: {ties}\nComputer: {count -(wins + ties)}")
+print(f"Thanks for playing! You won {wins} times and tied {ties} times out of {count} games.")
