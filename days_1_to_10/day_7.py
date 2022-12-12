@@ -12,20 +12,17 @@
 
  #Step 1
 import random
+import hangman_wordlist
 
-word_list = ["aardvark", "baboon", "camel"]
+# word_list = ["aardvark", "baboon", "camel"]
 correct_guesses = []
 lives = 5
-empty_board = ""
 game_won = False
 
 #randomly choose word
-chosen_word = word_list[random.randint(0,len(word_list)-1)]
+chosen_word = 
 
 print(chosen_word)
-for char in chosen_word:
-    empty_board += "_"
-
 
 #check if letter guessed is in the chosen_word and add to correct_guess if it is
 def check_letter(letter, word):
@@ -53,8 +50,13 @@ def print_blanks():
 
 
 print("Hangman 2: Hang In There!")
-print(empty_board)
+
 while lives > 0:
+    print(print_blanks())
+    
+    if game_won == True:
+        print(f"You win! The word was {chosen_word}.")
+        break
     #ask user to guess a letter, store as guess variable and make lowercase
     guess = input("Guess a letter!\n").lower()
 
@@ -62,14 +64,12 @@ while lives > 0:
     if chosen_word.split() in correct_guesses:
         game_won = True
     #If lives reach 0 and no win condition has been found end game with you lsot and display word
-    if lives == 0:
-        print(f"You lose! The word was {chosen_word}!")
-        break
-    elif game_won == True:
-        print(f"You win! The word was {chosen_word}.")
-        break
+
+if game_won == False:
+    print(f"You lose! The word was {chosen_word}!")
+      
    
     
 
-    print(print_blanks())
+    
 
