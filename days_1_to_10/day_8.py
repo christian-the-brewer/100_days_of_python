@@ -22,3 +22,22 @@
 #     return math.ceil(total_area / float(can)) 
 
 # print(paint_can_calculate(5.4,6.1,5))
+
+#Prime number checker
+
+#check modulo of every number up to half of the selected number
+
+def check_prime(number):
+    if number == 1:
+        return False
+    i = 2
+    while i <= number / 2:
+        if number % i == 0:
+            print(i)
+            return False
+        else:
+            print(i)
+            i += 1
+    return True
+
+print(check_prime(1))
