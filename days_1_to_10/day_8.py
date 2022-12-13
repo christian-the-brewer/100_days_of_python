@@ -44,23 +44,79 @@
 
 
 alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+
+alphabet.extend(alphabet)
+
 while True:
     direction = input("Enter 'encode' to encrypt a message, or decode to decrypt it:\n").lower()
     if direction == "encode":
-        message = input("Enter your message to be   encrypted:\n").lower()
+        message = input("Enter your message to be encrypted:\n").lower()
         break
     elif direction == "decode":
-        code = input("Enter your code to be decrypted:\n"). lower()
+        message = input("Enter your code to be decrypted:\n"). lower()
         break
     else:
         print("Please enter 'encode' or 'decode'")
         
 while True:
-    shift = input("Enter the shift number you would like to use:\n")
+    shift = int(input("Enter the shift number you would like to use:\n"))
     if isinstance(shift, int) and shift > 0:
         break
     else:
         print("Please enter a positive whole number")
 
-def encode(string, shift):
+def cypher(text, shift, direction):
+    char_list = []
+
+    while shift > 26:
+        shift -= 26
+        print(f"reducing shift to {shift}")
+
+    for char in text:
+        print(direction)
+        if direction == "encode":
+            x = alphabet.index(char)
+            char = alphabet[x + shift]
+            char_list.append(char)
+        else: 
+            x = (alphabet.index(char) + 26)
+            char = alphabet[x - shift]
+            char_list.append(char)
+
+    return "".join(char_list)
+
+
+print(cypher(message, shift, direction))
+# def encode(string, shift):
+#     #handle overly large shift values by reducing them by 26 so they still result in the same shifted value but stay within the bounds of the list.
+#     char_list = []
+
+   
+#     for char in string:
+        
+#         x = alphabet.index(char)
+#         char = alphabet[x + shift]
+#         print(char)
+#         char_list.append(char)
+#         print(char_list)
+
+#     return "".join(char_list)
+
+# def decode(string, shift):
+#     char_list = []
+
+#     while shift > 26:
+#         shift -= 26
+#         print(f"reducing shift to {shift}")
+    
+#     for char in string:
+        
+#         x = (alphabet.index(char) + 26)
+#         char = alphabet[x - shift]
+#         print(char)
+#         char_list.append(char)
+#         print(char_list)
+
+#     return "".join(char_list)
+
     
