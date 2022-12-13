@@ -12,7 +12,7 @@
 
  #Step 1
 import random
-import hangman_wordlist
+from hangman_wordlist import fill_list
 
 # word_list = ["aardvark", "baboon", "camel"]
 correct_guesses = []

@@ -5,6 +5,6 @@
 
 # my_function()
 
-import hangman_wordlist
+from hangman_wordlist import fill_list
 
 print(fill_list())
