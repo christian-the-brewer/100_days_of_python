@@ -110,7 +110,21 @@ def payment_check(drink):
         print(f"Insufficent funds. Returning ${payment}")
         return False
 
-payment_check(latte)
+# payment_check(latte)
+
+#help
+def help():
+    """Brings up help menu."""
+    print("'report': shows current supplies")
+    print("'fill': refills supplies")
+    print("'report': shows current supplies")
+    print("'espresso': orders an espresso")
+    print("'latte': orders an latte")
+    print("'cappuccino': orders an cappuccino")
+    print("'quit': close program")
+    
+print(logo)
+
 
 
 
