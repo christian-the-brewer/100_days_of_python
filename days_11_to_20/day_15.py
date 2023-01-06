@@ -37,6 +37,10 @@ cappuccino = {
     "price": 3.0,
 }
 
+#clears screen
+def clear():
+    os.system("clear")
+
 #check if enough supplies
 def check(drink, supplies):
     """takes in a drink and current supplies and returns true or false if there are enough supplies"""
@@ -62,6 +66,7 @@ def print_supplies(supplies):
 #fill supplies
 def fill(supplies):
     """returns max supplies and current money"""
+    print("Supplies refilled.")
     return {
     "water": 300,
     "milk": 200,
@@ -122,8 +127,23 @@ def help():
     print("'latte': orders an latte")
     print("'cappuccino': orders an cappuccino")
     print("'quit': close program")
-    
+
+clear()
 print(logo)
+while True:
+    user = input("What would you like? (espresso/latte/cappuccino/help): ").lower()
+    if user == "report":
+        print(print_supplies(supplies))
+    elif user == "refill":
+        supplies = fill(supplies)
+        print(print_supplies(supplies))
+        
+
+    
+
+
+
+
 
 
 
