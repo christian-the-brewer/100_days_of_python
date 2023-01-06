@@ -10,11 +10,11 @@ def clear():
     os.system("clear")
 
 #keep score
-score = 0
+#score = 0
 #continue or quit game after lose
 keep_playing = True
 #continue if win
-win_streak = True
+#win_streak = True
 #variable to hold A celeb
 a = 0
 
@@ -35,8 +35,13 @@ def compare(a, b):
         return "b"
 
 while keep_playing:
+    win_streak = True #continue if win
+    score = 0 #keep score
+    clear()
     a = pick_celeb(-1)
     while win_streak:
+        clear()
+        
         #select second  celeb
         b = pick_celeb(a)
         #first celeb data
@@ -51,15 +56,33 @@ while keep_playing:
         b_country = data[b]["country"]
 
         print(logo)
+        if score > 0:
+            print(f"Correct! You're score is {score}")
         print(f"Compare A: {a_name}, a {a_description}, from {a_country}.")
         print(vs)
         print(f"Against B: {b_name}, a {b_description}, from {b_country}.")
         #take user guess
-        guess = input("Who has more followers? Type 'A' or 'B': ").lower()
+        while True:
+            guess = input("Who has more followers? Type 'A' or 'B': ").lower()
+            if guess == "a" or guess == "b":
+                break
+            else:
+                print("Enter 'a' or 'b'.")
 
         #compare followers
+        if guess == compare(a, b):
+            score += 1
+            a = b
+        else:
+            win_streak = False
+            play_again = input(f"Wrong! You had a score of {score}. Play again? 'y' for yes, 'n' for no: ").lower()
+            if play_again == "y":
+                break
+            else:
+                keep_playing = False
+                break
 
-        break
-    break
+            
 
+       
 
