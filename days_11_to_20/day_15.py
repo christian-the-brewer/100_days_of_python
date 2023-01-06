@@ -36,10 +36,24 @@ cappuccino = {
 
 #check if enough supplies
 def check(drink, supplies):
+    """takes in a drink and current supplies and returns true or false if there are enough supplies"""
     for supply in supplies:
         if supply != "money":
             if drink[supply] > supplies[supply]:
                 return False
     return True
 
-print(check(espresso, supplies))
+# print(check(espresso, supplies))
+
+#print supplies
+def print_supplies(supplies):
+    """Prints current supplies"""
+    water = supplies["water"]
+    milk = supplies["milk"]
+    coffee = supplies["coffee"]
+    money = supplies["money"]
+    return f"Water: {water}ml\nMilk: {milk}ml\nCoffee: {coffee}g\nMoney: ${money}"
+            
+# print(print_supplies(supplies))
+
+
