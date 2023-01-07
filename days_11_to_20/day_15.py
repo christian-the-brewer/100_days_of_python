@@ -15,6 +15,7 @@ supplies = {
 
 
 #drinks
+
 espresso = {
     "name": "espresso",
     "water": 50,
@@ -37,6 +38,13 @@ cappuccino = {
     "price": 3.0,
 }
 
+#dict to convert user input to drink
+drinks = {
+    "espresso": espresso,
+    "latte": latte,
+    "cappuccino": cappuccino,
+}
+
 #clears screen
 def clear():
     os.system("clear")
@@ -44,7 +52,10 @@ def clear():
 #check if enough supplies
 def check(drink, supplies):
     """takes in a drink and current supplies and returns true or false if there are enough supplies"""
+    # print(f"This is drink: {drink}")
+    # print(f"This is supplies: {supplies}")
     for supply in supplies:
+        # print(supply)
         if supply != "money":
             if drink[supply] > supplies[supply]:
                 return False
@@ -137,7 +148,24 @@ while True:
     elif user == "refill":
         supplies = fill(supplies)
         print(print_supplies(supplies))
+    elif user == "espresso" or user == "latte" or user == "cappuccino":
+        drink = drinks[user]
+        if check(drink, supplies):
+            if payment_check(drink):
+                supplies["water"] -= drink["water"]
+                supplies["milk"] -= drink["milk"]
+                supplies["coffee"] -= drink["coffee"]
+                supplies["money"] += drink["price"]
+        else:
+                print("Sorry, not enough supplies for that. Please 'refill'.")
+    elif user == "help":
+        help()
+    elif user == "quit" or user == "q" or user == "end" or user == "close":
+        print("Shutting down...")
+        break
         
+        
+
 
     
 
