@@ -127,49 +127,83 @@ def radio_select():
     print(radio_state.get())
 
 
-# spinbox field function
-
-
-def spinbox_used():
-    print(spinbox.get())
-
 # submit button
 
 
 def calculate():
-    if radio_state.get() == 1:
-        result_label.config(text=str(float(spinbox.get()) * 1.609344))
+    if check_entry():
+        pass
+    else:
+        result_label.config(text="Error")
+        return
+
+    if mode.state == 1:
+        result_label.config(text=str(float(entry.get()) * 1.609344))
         print("converting miles")
-    elif radio_state.get() == 2:
-        result_label.config(text=str(float(spinbox.get()) * 0.6213712))
+    elif mode.state == -1:
+        result_label.config(text=str(float(entry.get()) * 0.6213712))
         print("converting kilometers")
     else:
         print("cannot get radio state")
 
 
-# label
-title_label = tkinter.Label(text="Miles / Kilometer Converter")
-title_label.grid(row=1, column=1)
+def check_entry():
+    string = entry.get()
 
-# radio button for selecting miles or km
-radio_state = tkinter.IntVar()
-radio_miles = tkinter.Radiobutton(
-    text="Miles to Kilometers", value=1, variable=radio_state, command=radio_select)
-radio_kms = tkinter.Radiobutton(
-    text="Kilometers to Miles", value=2, variable=radio_state, command=radio_select)
-radio_miles.grid(row=2, column=1)
-radio_kms.grid(row=3, column=1)
+    if string.isdecimal():
+        return True
 
-# spinbox for units
-spinbox = tkinter.Spinbox(width=15, from_=0, command=spinbox_used)
-spinbox.grid(row=4, column=1)
+    else:
+        return False
+
+# convert state
+
+
+class Game_mode:
+    def __init__(self, state):
+        self.state = 1
+
+    def change_mode(self):
+        change_mode()
+        self.state *= -1
+
+
+mode = Game_mode(1)
+
+# function to change conversion mode and labels
+
+
+def change_mode():
+
+    if mode.state == 1:
+        label_1.config(text="Km")
+        label_2.config(text="Miles")
+
+    elif mode.state == -1:
+        label_1.config(text="Miles")
+        label_2.config(text="Km")
+
+
+# button to swap conversion
+swap_button = tkinter.Button(text="Swap", command=mode.change_mode)
+swap_button.grid(row=1, column=1)
+
+# entry for units
+entry = tkinter.Entry(width=15)
+entry.grid(row=1, column=2)
 
 # submit button
 submit_button = tkinter.Button(text="Convert", command=calculate)
-submit_button.grid(row=5, column=1)
+submit_button.grid(row=3, column=2)
 
 # display
 result_label = tkinter.Label(text="Result")
-result_label.grid(row=6, column=1)
+result_label.grid(row=2, column=2)
+is_equal_label = tkinter.Label(text="is equal to")
+is_equal_label.grid(row=2, column=1)
+label_1 = tkinter.Label(text="Miles")
+label_1.grid(row=1, column=3)
+label_2 = tkinter.Label(text="Km")
+label_2.grid(row=2, column=3)
 
 window.mainloop()
