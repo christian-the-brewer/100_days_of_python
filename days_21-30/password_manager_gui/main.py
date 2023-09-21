@@ -14,12 +14,25 @@ TERTIARY_COLOR = "#9D76C1"
 def generate_password():
     pass
 
+#add password
+def add_password():
+  email = email_entry.get()
+  website = web_entry.get()
+  password = pw_entry.get()
+  data = f"{website} | {email} | {password}\n"
+  file = open("data.txt", "a")
+  file.write(data)
+  file.close()
+  print(data)
+  web_entry.delete(0, 'end')
+  pw_entry.delete(0, 'end')
+  
 
 # UI
 window = tkinter.Tk()
 window.title("Password Manager")
 window.minsize(width=500, height=500)
-window.config(padx=20, pady=20, bg=BG_Color)
+window.config(padx=50, pady=50, bg=BG_Color)
 
 canvas = tkinter.Canvas(width=200, height=200,
                         highlightthickness=0, bg=BG_Color)
@@ -37,18 +50,22 @@ pw_label.grid(row=3, column=0)
 
 # entries
 website_data = tkinter.StringVar()
-web_entry = tkinter.Entry(textvariable=website_data, width=35)
+web_entry = tkinter.Entry(textvariable=website_data, width=40)
 web_entry.grid(row=1, column=1, columnspan=2)
 email_data = tkinter.StringVar()
-email_entry = tkinter.Entry(textvariable=email_data, width=35)
+email_entry = tkinter.Entry(textvariable=email_data, width=40)
+email_entry.insert(0, "email@email.com")
 email_entry.grid(row=2, column=1, columnspan=2)
 pw_data = tkinter.StringVar()
-pw_entry = tkinter.Entry(textvariable=pw_data, width=21)
+pw_entry = tkinter.Entry(textvariable=pw_data, width=24)
 pw_entry.grid(row=3, column=1)
 
 # buttons
 generate_pw_button = tkinter.Button(
-    text="Generate Password", command=generate_password)
+    text="Generate Password", command=generate_password, width=13)
 generate_pw_button.grid(row=3, column=2)
+add_pw_button = tkinter.Button(
+    text="Add", command=add_password, width=38)
+add_pw_button.grid(row=4, column=1, columnspan=2)
 
 window.mainloop()
