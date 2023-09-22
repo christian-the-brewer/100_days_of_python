@@ -2,7 +2,7 @@
 import tkinter
 from tkinter import messagebox
 import random
-
+import pyperclip
 
 # Constants
 BG_Color = "#E5CFF7"
@@ -35,6 +35,7 @@ def generate_password():
     print(password)
     pw_entry.delete(0, "end")
     pw_entry.insert(0, password)
+    pyperclip.copy(password)
 
 # add password
 
