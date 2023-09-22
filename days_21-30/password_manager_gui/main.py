@@ -59,7 +59,8 @@ def add_password():
         print(data)
         web_entry.delete(0, 'end')
         pw_entry.delete(0, 'end')
-        tkinter.messagebox.showinfo(title="Success", message="Account added.")
+        tkinter.messagebox.showinfo(
+            title="Success", message="Account added for {website}")
 
 
 # UI
