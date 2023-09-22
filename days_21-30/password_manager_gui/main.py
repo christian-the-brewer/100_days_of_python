@@ -1,5 +1,7 @@
 # Password manager app by Christian Brewer
 import tkinter
+from tkinter import messagebox
+import random
 
 
 # Constants
@@ -12,21 +14,52 @@ TERTIARY_COLOR = "#9D76C1"
 
 
 def generate_password():
-    pass
+    letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y',
+               'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+    numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+    symbols = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
 
-#add password
+    nr_letters = random.randint(8, 10)
+    nr_symbols = random.randint(2, 4)
+    nr_numbers = random.randint(2, 4)
+
+    password_letters = [random.choice(letters) for _ in range(nr_letters)]
+    password_numbers = [random.choice(numbers) for _ in range(nr_numbers)]
+    password_symbols = [random.choice(symbols) for _ in range(nr_symbols)]
+
+    password_list = password_letters + password_numbers + password_symbols
+
+    random.shuffle(password_list)
+    print(password_list)
+    password = "".join(password_list)
+    print(password)
+    pw_entry.delete(0, "end")
+    pw_entry.insert(0, password)
+
+# add password
+
+
 def add_password():
-  email = email_entry.get()
-  website = web_entry.get()
-  password = pw_entry.get()
-  data = f"{website} | {email} | {password}\n"
-  file = open("data.txt", "a")
-  file.write(data)
-  file.close()
-  print(data)
-  web_entry.delete(0, 'end')
-  pw_entry.delete(0, 'end')
-  
+    email = email_entry.get()
+    website = web_entry.get()
+    password = pw_entry.get()
+
+    if len(website) == 0 or len(email) == 0 or len(password) == 0:
+        tkinter.messagebox.showinfo(
+            title="Error", message="Please complete all fields.")
+        return
+    confirm = tkinter.messagebox.askokcancel(
+        title=website, message=f"Email/Username: {email}\nPassword: {password}\nIs this correct?")
+
+    if confirm:
+        data = f"{website} | {email} | {password}\n"
+        file = open("data.txt", "a")
+        file.write(data)
+        file.close()
+        print(data)
+        web_entry.delete(0, 'end')
+        pw_entry.delete(0, 'end')
+
 
 # UI
 window = tkinter.Tk()
@@ -57,15 +90,15 @@ email_entry = tkinter.Entry(textvariable=email_data, width=40)
 email_entry.insert(0, "email@email.com")
 email_entry.grid(row=2, column=1, columnspan=2)
 pw_data = tkinter.StringVar()
-pw_entry = tkinter.Entry(textvariable=pw_data, width=24)
+pw_entry = tkinter.Entry(textvariable=pw_data, width=21)
 pw_entry.grid(row=3, column=1)
 
 # buttons
 generate_pw_button = tkinter.Button(
-    text="Generate Password", command=generate_password, width=13)
+    text="Generate Password", command=generate_password, width=15)
 generate_pw_button.grid(row=3, column=2)
 add_pw_button = tkinter.Button(
-    text="Add", command=add_password, width=38)
+    text="Add", command=add_password, width=37)
 add_pw_button.grid(row=4, column=1, columnspan=2)
 
 window.mainloop()
