@@ -3,6 +3,7 @@ import tkinter
 from tkinter import messagebox
 import random
 import pyperclip
+import json
 
 # Constants
 BG_Color = "#E5CFF7"
@@ -43,6 +44,12 @@ def add_password():
     email = email_entry.get()
     website = web_entry.get()
     password = pw_entry.get()
+    new_data = {
+        website: {
+            "email": email,
+            "password": password,
+        }
+    }
 
     if len(website) == 0 or len(email) == 0 or len(password) == 0:
         tkinter.messagebox.showinfo(
@@ -53,14 +60,30 @@ def add_password():
 
     if confirm:
         data = f"{website} | {email} | {password}\n"
-        file = open("data.txt", "a")
-        file.write(data)
-        file.close()
-        print(data)
-        web_entry.delete(0, 'end')
+
+        try:
+            with open("data.json", "r") as data_file:
+                data = json.load(data_file)
+
+        except json.decoder.JSONDecodeError:
+            with open("data.json", "w") as data_file:
+                json.dump(new_data, data_file, indent=4)
+        else:
+            data.update(new_data)
+
+            with open("data.json", "w") as data_file:
+                json.dump(data, data_file, indent=4)
+        finally:
+            web_entry.delete(0, 'end')
         pw_entry.delete(0, 'end')
         tkinter.messagebox.showinfo(
-            title="Success", message="Account added for {website}")
+            title="Success", message=f"Account added for {website}")
+
+# search
+
+
+def search():
+    pass
 
 
 # UI
@@ -85,8 +108,8 @@ pw_label.grid(row=3, column=0)
 
 # entries
 website_data = tkinter.StringVar()
-web_entry = tkinter.Entry(textvariable=website_data, width=40)
-web_entry.grid(row=1, column=1, columnspan=2)
+web_entry = tkinter.Entry(textvariable=website_data, width=21)
+web_entry.grid(row=1, column=1)
 email_data = tkinter.StringVar()
 email_entry = tkinter.Entry(textvariable=email_data, width=40)
 email_entry.insert(0, "email@email.com")
@@ -102,5 +125,8 @@ generate_pw_button.grid(row=3, column=2)
 add_pw_button = tkinter.Button(
     text="Add", command=add_password, width=37)
 add_pw_button.grid(row=4, column=1, columnspan=2)
+search_button = tkinter.Button(
+    text="Search", command=search, width=15)
+search_button.grid(row=1, column=2)
 
 window.mainloop()
