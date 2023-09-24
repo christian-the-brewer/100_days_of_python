@@ -65,7 +65,7 @@ def add_password():
             with open("data.json", "r") as data_file:
                 data = json.load(data_file)
 
-        except json.decoder.JSONDecodeError:
+        except FileNotFoundError:
             with open("data.json", "w") as data_file:
                 json.dump(new_data, data_file, indent=4)
         else:
@@ -83,7 +83,29 @@ def add_password():
 
 
 def search():
-    pass
+    search_term = web_entry.get()
+
+    if len(search_term) > 0:
+        try:
+            with open("data.json", "r") as data_file:
+                data = json.load(data_file)
+            email = data[search_term]["email"]
+            password = data[search_term]["password"]
+        except FileNotFoundError:
+            tkinter.messagebox.showinfo(
+                title="Not Found", message=f"{search_term} not found.")
+        except KeyError:
+            tkinter.messagebox.showinfo(
+                title="Not Found", message=f"{search_term} not found.")
+        else:
+            tkinter.messagebox.showinfo(
+                title=search_term, message=f"Email/Username: {email}\nPassword: {password}")
+
+        finally:
+            pass
+    else:
+        tkinter.messagebox.showinfo(
+            title="Not Found", message="Please enter a website name to search.")
 
 
 # UI
