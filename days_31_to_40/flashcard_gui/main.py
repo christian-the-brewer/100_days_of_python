@@ -3,10 +3,11 @@
 import tkinter
 import pandas as pd
 import random
+import time
 
 # word data
 df = pd.read_csv("it_to_en_1000_word_list.csv")
-print(df.loc[1]["italian"])
+
 
 # colors
 
@@ -20,12 +21,17 @@ window.title("Language Flash Cards")
 language_1 = "Italian"
 language_2 = "English"
 
+global num
+
 # random_word func
 
 
 def random_word():
-    num = random.randint(0, len(df))
-    print(num)
+  num = random.randint(0, len(df))
+  canvas.itemconfig(shown_word,text=df.loc[num][language_1])
+  time.sleep(3)
+  
+  
 
 
 word = "test"
