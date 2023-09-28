@@ -3,14 +3,20 @@
 import tkinter
 import pandas as pd
 import random
-import time
+
 
 # word data
-df = pd.read_csv("words_to_learn.csv")
+try:
+    df = pd.read_csv("data/words_to_learn.csv")
+
+except FileNotFoundError:
+    df = pd.read_csv("data/it_to_en_1000_word_list.csv")
+finally:
+    words_to_learn = df.to_dict(orient="records")
 
 
-num = 1
-
+started = False
+current_card = ""
 # colors
 
 BG_COLOR = "#B1DDC6"
@@ -20,37 +26,47 @@ Font = "#26577C"
 language_1 = "Italian"
 language_2 = "English"
 
+
 # random_word func
 
 
 def random_word():
-    global num, flip_timer
+    global flip_timer, current_card, started
     window.after_cancel(flip_timer)
-    num = random.randint(0, len(df))
+    current_card = random.choice(words_to_learn)
     canvas.itemconfig(card, image=front_image)
     canvas.itemconfig(
-        shown_word, text=df.loc[num][language_1], font=("Ariel", 60, "bold"), fill="black")
+        shown_word, text=current_card[language_1], font=("Ariel", 60, "bold"), fill="black")
     canvas.itemconfig(language, text=language_1, fill="black")
     flip_timer = window.after(3000, func=flip_card)
+    if not started:
+        started = True
 
 
 def flip_card():
-    global num
+    global current_card
     canvas.itemconfig(card, image=back_image)
     canvas.itemconfig(
-        shown_word, text=df.loc[num][language_2], font=("Ariel", 60, "bold"), fill="white")
+        shown_word, text=current_card[language_2], font=("Ariel", 60, "bold"), fill="white")
     canvas.itemconfig(language, text=language_2, fill="white")
 
 # known_word
 
 
 def known_word():
-    global num
-    df.drop(3)
-    print(df)
-    df.to_csv("words_to_learn.csv", index=False)
-    print(df)
-    random_word()
+    global current_card
+    if started:
+        # remove word
+        print(len(words_to_learn))
+        words_to_learn.remove(current_card)
+        print(f"{current_card[language_1]} removed")
+        print(len(words_to_learn))
+        data = pd.DataFrame(words_to_learn)
+        data.to_csv("data/words_to_learn.csv", index=False)
+
+        random_word()
+    else:
+        random_word()
 
 
 window = tkinter.Tk()
